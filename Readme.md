@@ -25,6 +25,10 @@ time in unpriveleged containers and enable unattended installation. This setup a
 set properly and all IPA information can be obtained from the DNS server. If that's not the case, you may
 have to provide additional options.
 
+**You will also have to create the `private/` folder in the folder you will mount to `/var/lib/sss/pipes`!**
+```bash
+mkdir </path/to/appdata/data/pipes/private>
+```
 
 ### Running using podman cli
 
@@ -69,4 +73,4 @@ podman build \
 
 ## Versions
 
-* **03.04.21:** - Intial Release.
+* **03.04.21:** - Initial Release.
