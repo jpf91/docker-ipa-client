@@ -10,7 +10,9 @@ Currently only `x86_64` images are being built, allthough the `Dockerfile` is no
 
 Here are some instructions and snippets to help you get started creating a container.
 
-### IPA configuration
+### Initial configuration
+
+#### IPA options
 
 Before starting the container the first time, you need to setup a file with options to be passed to ipa-client-install:
 
@@ -25,9 +27,15 @@ time in unpriveleged containers and enable unattended installation. This setup a
 set properly and all IPA information can be obtained from the DNS server. If that's not the case, you may
 have to provide additional options.
 
+#### SSSD setup
 **You will also have to create the `private/` folder in the folder you will mount to `/var/lib/sss/pipes`!**
 ```bash
 mkdir </path/to/appdata/data/pipes/private>
+```
+
+Also initialize the keytab file, if you share it with other containers:
+```bash
+ echo -e "\0005\0002\c" ></path/to/appdata/data/krb5.keytab>
 ```
 
 ### Running using podman cli
@@ -37,6 +45,7 @@ podman run --name ipa-client-nas \
   -h nas.example.com \
   -e container=podman \
   -v </path/to/appdata/ipa-options>:/etc/ipa-options \
+  -v </path/to/appdata/data/krb5.keytab>:/etc/krb5.keytab \
   -v </path/to/appdata/data/krb5.conf>:/etc/krb5.conf \
   -v </path/to/appdata/data/krb5.conf.d>:/etc/krb5.conf.d \s
   -v </path/to/appdata/data/pipes>:/var/lib/sss/pipes \
@@ -51,6 +60,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | :----: | --- |
 | `-h nas.example.com` | Set the hostname, must be fully qualified. |
 | `-v /etc/ipa-options` | Installation options directly passed to `ipa-client-install`. See above for an example. |
+| `-v /etc/krb5.keytab` | The container will write kerberos information to this file. Share it with your other containers. |
 | `-v /etc/krb5.conf` | The container will write kerberos information to this file. Share it with your other containers. |
 | `-v /etc/krb5.conf.d` | The container will write kerberos information to this file. Share it with your other containers. |
 | `-v /var/lib/sss/pipes/` | The conainer will make the SSSD API available here. Share it with your other containers. |
