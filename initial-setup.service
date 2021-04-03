@@ -1,0 +1,10 @@
+[Unit]
+After=network-online.target
+After=sssd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/initial-setup.sh
+
+[Install]
+WantedBy=multi-user.target
