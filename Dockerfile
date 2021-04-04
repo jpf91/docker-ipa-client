@@ -4,7 +4,8 @@ FROM registry.fedoraproject.org/fedora-minimal:33
 # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/using_containerized_identity_management_services/configuring-the-sssd-container-to-provide-identity-and-authentication-services-on-atomic-host
 # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/using_containerized_identity_management_services/deploying-sssd-containers-with-different-configurations
 RUN microdnf install \
-    sssd-client krb5-workstation ipa-client iputils
+    sssd-client krb5-workstation ipa-client iputils && \
+    microdnf clean all
 
 RUN systemctl disable proc-fs-nfsd.mount nfs-idmapd.service nfs-mountd.service nfs-server.service nfsdcld.service autofs.service sssd-nss.socket sssd-pam.socket sssd-pam-priv.socket systemctl disable sssd-sudo.socket systemd-networkd-wait-online
 RUN systemctl mask var-lib-nfs-rpc_pipefs.mount
