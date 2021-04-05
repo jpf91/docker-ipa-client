@@ -68,7 +68,7 @@ Container images are configured using parameters passed at runtime (such as thos
 ## Support Info
 
 * Shell access whilst the container is running: `podman exec -it ipa-client-nas /bin/bash`
-* To monitor the logs of the container in realtime: `podman logs -f ipa-client-nas`. FIXME: This does not provide all logs, those are logged to the journal in the container.
+* To monitor the logs of the container in realtime: `podman logs -f ipa-client-nas`
 * Report bugs [here](https://github.com/jpf91/docker-ipa-client).
 
 ## Building locally
@@ -83,4 +83,5 @@ podman build \
 
 ## Versions
 
+* **05.04.21:** - Use fedora-systemd base image.
 * **03.04.21:** - Initial Release.

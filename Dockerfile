@@ -1,5 +1,5 @@
 # https://fedoramagazine.org/building-smaller-container-images/
-FROM registry.fedoraproject.org/fedora-minimal:33
+FROM docker.io/jpf91/fedora-systemd
 
 # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/using_containerized_identity_management_services/configuring-the-sssd-container-to-provide-identity-and-authentication-services-on-atomic-host
 # https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/using_containerized_identity_management_services/deploying-sssd-containers-with-different-configurations
@@ -12,10 +12,7 @@ RUN systemctl mask var-lib-nfs-rpc_pipefs.mount
 
 # Setting the domain name fails in unprivileged container
 ADD nis-domainname.override /etc/systemd/system/nis-domainname.service.d/override.conf
-
 # Files to perform the IPA join
-ADD initial-setup.service /etc/systemd/system/initial-setup.service
-ADD initial-setup.sh /usr/sbin/initial-setup.sh
-RUN systemctl enable initial-setup.service
+ADD 01-ipa-setup.sh /etc/initial-setup.d/01-ipa-setup.sh
 
 ENTRYPOINT ["/sbin/init"]
