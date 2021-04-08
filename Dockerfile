@@ -7,7 +7,7 @@ RUN microdnf install \
     sssd-client krb5-workstation ipa-client iputils && \
     microdnf clean all
 
-RUN systemctl disable proc-fs-nfsd.mount nfs-idmapd.service nfs-mountd.service nfs-server.service nfsdcld.service autofs.service sssd-nss.socket sssd-pam.socket sssd-pam-priv.socket systemctl disable sssd-sudo.socket systemd-networkd-wait-online
+RUN systemctl disable proc-fs-nfsd.mount nfs-idmapd.service nfs-mountd.service nfs-server.service nfsdcld.service autofs.service sssd-nss.socket sssd-pam.socket sssd-pam-priv.socket sssd-sudo.socket sssd-ssh.socket systemd-networkd-wait-online chrony-wait.service
 RUN systemctl mask var-lib-nfs-rpc_pipefs.mount
 
 # Setting the domain name fails in unprivileged container
